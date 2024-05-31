@@ -1,0 +1,27 @@
+html, body{
+    height: 100%;
+    width: 100%;    
+}
+.main{
+    width: 90%;
+    background-color: #DDD;
+    padding-bottom: 5%;
+}
+#help{
+    margin: 0;
+    padding-bottom: 0px;
+}
+#body{
+    margin-top: 0px;
+}
+#table{
+    margin: 0;
+    border: 1px solid black;
+}
+th:nth-child(2){
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+td:nth-child(2){
+    border-left: 1px solid black;
+}
