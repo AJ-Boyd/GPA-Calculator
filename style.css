@@ -14,6 +14,8 @@ html, body{
 #body{
     margin-top: 0px;
 }
+
+/*Cumulative GPA Calc*/
 #table{
     margin: 0;
     border: 1px solid black;
@@ -27,4 +29,30 @@ td:nth-child(2){
 }
 #GPA-container{
     display: none;
+}
+
+/*Class Grade Calc*/
+#body2{
+    display: flex;
+    margin-top: 0px;
+    align-items: flex-start;
+}
+#assignment-container{
+    border: 1px solid black;
+}
+
+.table-borderless input{
+    color: red;
+}
+.group{
+    float: left;
+    margin:0;
+}
+#group-info-container{
+    border: 1px solid black;
+    width: 400px;
+    margin-left: 5%;
+}
+.column{
+    padding: 1%;
 }
