@@ -116,3 +116,174 @@ function clearTable(){
         x[i].remove();
     }
 }
+
+var idAssignments = [2]
+var numAssignments = [2]
+
+//adds assignment to group
+function addAssignment(id){
+    var table = document.getElementById("table" + id); //table to append to
+    var row = document.createElement("tr");
+    row.id = "table" + id + "-assignment" + idAssignments[id];
+    //HTML for assignment name
+    var nameData = document.createElement("td");
+    var name = document.createElement("input");
+    name.placeholder="Optional";
+    nameData.appendChild(name);
+    row.appendChild(nameData);
+    //HTML for points earned / points total
+    var ptsData = document.createElement("td");
+    var ptsEarned = document.createElement("input");
+    var ptsTotal = document.createElement("input");
+    ptsEarned.placeholder = 0; ptsTotal.placeholder = 0;
+    ptsEarned.className = "pE"+id; ptsTotal.className = "pE"+id;
+    ptsEarned.size = 5; ptsTotal.size = 5;
+    ptsData.appendChild(ptsEarned)
+    ptsData.innerHTML += "/";
+    ptsData.appendChild(ptsTotal)
+    //HTML for remove button
+    var removeData = document.createElement("td")
+    var help = idAssignments[id]
+    var remove = document.createElement("button")
+    remove.classList = "btn btn-danger";
+    remove.innerText = "Remove";
+    remove.addEventListener("click", function(){
+        removeAssignment(id, help)
+    })
+    removeData.appendChild(remove);
+
+    //append children to row
+    row.appendChild(nameData);
+    row.appendChild(ptsData)
+    row.appendChild(removeData)
+    //append row to table
+    table.appendChild(row)
+
+    //increase number of assignents at given group
+    idAssignments[id]++; 
+    numAssignments[id]++;
+}
+
+//removes an assignment from a group
+function removeAssignment(table, assignment){
+    var elem = document.getElementById("table" + table + "-assignment" + assignment)
+    elem.remove()
+    numAssignments[table]--; //decrease number of assignemnts
+}
+
+function addGroup(){
+    //add to global arrays
+    idAssignments.push(0); numAssignments.push(0);
+    var id = (idAssignments.length - 1);
+    var group = document.createElement("div")
+    group.id = "group"+ id;
+    group.className = "group";
+
+    //HTML for header
+    var header = document.createElement("h3");
+    header.innerHTML = "Group " + (id + 1);
+    group.appendChild(header);
+    //HTML for table
+    var table = document.createElement("table");
+    table.classList = "table table-borderless";
+    var tBody = document.createElement("tbody");
+    tBody.id = "table" + id;
+    var tRow = document.createElement("tr");
+    tRow.id = "table" + id + "-assignment" + idAssignments[id];
+    //HTML for table data
+    var td1 = document.createElement("td");
+    var name = document.createElement("input");
+    name.placeholder="Optional";
+    td1.appendChild(name)
+    var td2 = document.createElement("td");
+    var ptsEarned = document.createElement("input");
+    var ptsTotal = document.createElement("input");
+    ptsEarned.size = "5"; ptsTotal.size = "5";
+    ptsEarned.className = "pE" + id; ptsTotal.className = "pT" + id
+    td2.appendChild(ptsEarned);
+    td2.innerHTML += "/";
+    td2.appendChild(ptsTotal);
+    var td3 = document.createElement("td");
+    var btn = document.createElement("button");
+    btn.classList = "btn btn-danger";
+    btn.innerHTML = "Remove";
+    var help = idAssignments[id]
+    btn.addEventListener("click", function(){
+        removeAssignment(id, help)
+    });
+    td3.appendChild(btn);
+    //HTML for add assignment btn
+    var add = document.createElement("button");
+    add.classList = "btn btn-link";
+    add.innerHTML = "Add assignment+"
+    add.addEventListener("click", function(){
+        addAssignment(id);
+    })
+
+    //append children
+    tRow.appendChild(td1); tRow.appendChild(td2); tRow.appendChild(td3);
+    tBody.appendChild(tRow);
+    table.append(tBody);
+    group.appendChild(table);
+    group.appendChild(add)
+    document.getElementById("assignment-container").append(group)
+    
+    //add group info to container
+    var weight = document.createElement("div")
+    weight.innerHTML = "Group " + (id + 1) + "  ";
+    var input = document.createElement("input");
+    input.id = "group" + id + "-weight";
+    input.className = "weight"  
+    weight.appendChild(input)
+    weight.innerHTML += "%";
+    document.getElementById("group-info").appendChild(weight);
+
+    //increase number of assignents at given group
+    idAssignments[id]++; 
+    numAssignments[id]++;
+}
+
+function calcGrade(){
+    var points = 0, total = 0, weights = 0, weightedTotal = 0;
+    
+    //sum up the total weight percentage
+    for(var i = 0; i < idAssignments.length; i++){
+        var x = document.getElementsByClassName("weight")[i];
+        if(x.value != "" && Number.isInteger(Number(x.value)))
+            weights += parseFloat(x.value);
+    } 
+    alert(weights)
+    alert(numAssignments)
+    for(var i = 0; i < numAssignments.length; i++){
+        alert(("pE"+i) + " " +document.getElementsByClassName("pE" + i).length)
+        for(var j = 0; j < document.getElementsByClassName("pE" + i).length; j++){
+            pE = document.getElementsByClassName("pE" + i)[j];
+            pT = document.getElementsByClassName("pT" + i)[j]
+            console.log(document.getElementsByClassName("pE" + i)[j].value, document.getElementsByClassName("pT" + i)[j].value)
+            if(pE != "" && pT != "" && Number.isInteger(Number(pE.value)) && Number.isInteger(Number(pT.value))){
+                points += parseFloat(pE.value);
+                total += parseFloat(pT.value);
+            }
+        }
+        console.log(points)
+        alert(points + "/" + total)
+        var percentage = (points / total) * 100;
+        alert(percentage)
+        var weight = (parseFloat(document.getElementById("group" + i + "-weight").value) / weights) 
+        alert("weight: " + weight)
+        if(!Number.isNaN(weight))
+            weightedTotal += (percentage * weight);
+        points = 0; total = 0;
+    }
+    //alert(weightedTotal);
+    document.getElementById("grade").innerHTML = weightedTotal.toFixed(1) + "%";
+    document.getElementById("total-percentage").innerHTML = weights;
+    document.getElementById("grade-container").style.display = "block";
+    console.log("Class grade:", weightedTotal)
+    if(weights > 100 || weights < 0){
+        document.getElementById("warning").style.display = "block"
+    }else{
+        document.getElementById("warning").style.display = "hidden"
+    }
+
+}

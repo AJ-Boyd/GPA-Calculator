@@ -19,38 +19,45 @@
             </div>
         </nav>
         <div id="body2" class="mt-0">
-            <br>
             <div id="assignment-container" class="column">
-                <div class = "group">
+                <div id = "group0" class = "group">
                     <h3>Group 1</h3>
                     <table class="table table-borderless">
-                        <tbody>
+                        <tbody id = "table0">
                             <tr>
                                 <td><input type="text" placeholder="Assignment Name"></td>
-                                <td><input type="text" placeholder="30" size="5">/<input type="text" placeholder="35" size="5"></td> 
+                                <td><input type="text" class="pE0" placeholder="30" size="5">/<input type="text" class = "pT0" placeholder="35" size="5"></td> 
                             </tr>
-                            <tr>
+                            <tr id = "table0-assignment1">
                                 <td><input type="text" placeholder="Assignment Name"></td>
-                                <td><input type="text" placeholder="30" size="5">/<input type="text" placeholder="35" size="5"></td> 
-                                <td><button type="button" class="btn btn-danger">Remove</button></td>
+                                <td><input type="text" class="pE0" placeholder="30" size="5">/<input type="text"class="pT0"  placeholder="35" size="5"></td> 
+                                <td><button onclick="removeAssignment(0, 1);" type="button" class="btn btn-danger">Remove</button></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-link">Add Assignment +</button>
+                    <button onclick="addAssignment(0);" type="button" id= "addAssign0" class="btn btn-link">Add assignment+</button>
                 </div>
-                
             </div>
             <div id="group-info-container" class="column">
-                <div id="group-info">
+                <div id="wrapper">
+                    <div id="group-info">
+                        <h5>Weights per Asignment Group:</h5>
+                        <div>
+                            Group 1  
+                            <input id="group0-weight" class="weight" type="text" value="15">%
+                        </div>
+                    </div>
+                    <button onclick="addGroup();" type="button" class="btn btn-link" onclick="">Add group+</button><br>
                     <div>
-                        Group 1
-                        <input type="text" placeholder="15">%
+                        <button onclick="calcGrade();" type="button" class="btn btn-success">Calculate Grade</button>
+                        <button type="button" class="btn btn-secondary">Clear</button>
                     </div>
                 </div>
-                <button type="button" class="btn btn-link" onclick="">Add group+</button><br>
-                <div>
-                    <button type="button" class="btn btn-success">Calculate Grade</button>
-                    <button type="button" class="btn btn-secondary">Clear</button>
+                <div id = "grade-container" style = "display: none;">
+                    <br>
+                    <h3>Class grade: <span id = "grade"></span></h3>
+                    Total percentage: <span id = "total-percentage"></span>%
+                    <p id = "warning">Calculated total percentage was above 100%. Please verify weight allocations.</span>
                 </div>
             </div>
             

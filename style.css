@@ -37,22 +37,28 @@ td:nth-child(2){
     margin-top: 0px;
     align-items: flex-start;
 }
-#assignment-container{
-    border: 1px solid black;
-}
-
-.table-borderless input{
-    color: red;
-}
 .group{
     float: left;
     margin:0;
+    border-bottom: 1px solid black;
+    max-height: 325px;
+    overflow-y: auto;
+}
+.group h3{
+    position: sticky;
+    top: 0;
+    background: #AAA;
 }
 #group-info-container{
-    border: 1px solid black;
     width: 400px;
-    margin-left: 5%;
+    margin-left: 10%;
+    flex-shrink: 0;
 }
-.column{
+#wrapper{
     padding: 1%;
+    border: 1px solid black;
+}
+#warning{
+    display: none;
+    color: red;
 }
